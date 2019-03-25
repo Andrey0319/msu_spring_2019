@@ -193,7 +193,6 @@ int main(int argc, char* argv[])
     std::string args = argv[1];                    //stop == 0  - continue calculating
     int i = 0, stop = 0, index = args.length();    //stop == 1  - end of expression
     long long res;                                 //stop == 2  - error
-    i = 0;
     res = add(i, 1, stop, args, index);   //expression value
     if (stop == 2) {                      //checking input
         std::cout << "error";
