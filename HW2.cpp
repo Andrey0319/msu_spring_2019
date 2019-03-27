@@ -3,15 +3,15 @@
 
 int is_number(char a);
 int is_operation(char a);
-long long read_number(int &index, int &stop, std::string &args, int max_index);
-char read_operator (int &index, int &stop, std::string &args, int max_index);
+long long read_number(int &index, int &stop, const std::string &args, int max_index);
+char read_operator (int &index, int &stop, const std::string &args, int max_index);
 
 /*read_number - read number, skipping all spaces and checking correct input
   read_operator - read operation, skipping all spaces and checking correct input
 */
 
-long long add(int &index, int arg1, char op, int neg1, int &stop, std::string &args, int max_index);
-long long mul(int &index, int arg1, char op, int &neg, int &stop, std::string &args, int max_index);
+long long add(int &index, int arg1, char op, int neg1, int &stop, const std::string &args, int max_index);
+long long mul(int &index, int arg1, char op, int &neg, int &stop, const std::string &args, int max_index);
 
 /* arg1      - first argument in calculating consecutive multiplications and divisions
    op        - first operation in calculating consecutive multiplications and divisions
@@ -36,7 +36,7 @@ int is_operation(char a)
 }
 
 
-long long read_number(int &index, int &stop, std::string &args, int max_index)
+long long read_number(int &index, int &stop, const std::string &args, int max_index)
 {
     int neg = 1;
     long long num = 0;
@@ -62,7 +62,7 @@ long long read_number(int &index, int &stop, std::string &args, int max_index)
 }
 
 
-char read_operator (int &index, int &stop, std::string &args, int max_index)
+char read_operator (int &index, int &stop, const std::string &args, int max_index)
 {
     while (args[index] == ' ' && index < max_index)
         index++;
@@ -78,7 +78,7 @@ char read_operator (int &index, int &stop, std::string &args, int max_index)
 }
 
 
-long long add(int &index, int neg1, int &stop, std::string &args, int max_index)
+long long add(int &index, int neg1, int &stop, const std::string &args, int max_index)
 {
     long long arg2;
     char op;
@@ -127,7 +127,7 @@ long long add(int &index, int neg1, int &stop, std::string &args, int max_index)
 }
 
 
-long long mul(int &index, int arg1, char op, int &neg, int &stop, std::string &args, int max_index)
+long long mul(int &index, int arg1, char op, int &neg, int &stop, const std::string &args, int max_index)
 {
     long long arg2;
     // compute first operation
@@ -190,7 +190,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    std::string args = argv[1];                    //stop == 0  - continue calculating
+    const std::string args = argv[1];                    //stop == 0  - continue calculating
     int i = 0, stop = 0, index = args.length();    //stop == 1  - end of expression
     long long res;                                 //stop == 2  - error
     res = add(i, 1, stop, args, index);   //expression value
