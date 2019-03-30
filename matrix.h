@@ -37,14 +37,30 @@ public:
         Row (int *row, const int c)
             :mat (row), columns_count (c) {}
 
-        int& operator [] (size_t j) {
+        const int& operator [] (size_t j) const
+        {
+            if (j >= columns_count || j < 0)
+                throw std::out_of_range("");
+            return mat[j];
+        }
+
+        int& operator [] (size_t j)
+        {
             if (j >= columns_count || j < 0)
                 throw std::out_of_range("");
             return mat[j];
         }
     };
 
-    Row operator [] (const size_t i) const
+    const Row operator [] (const size_t i) const
+    {
+        if (i >= rows_count || i < 0)
+            throw std::out_of_range("");
+        Row row (mat[i], columns_count);
+        return row;
+    }
+
+    Row operator [] (const size_t i)
     {
         if (i >= rows_count || i < 0)
             throw std::out_of_range("");
@@ -62,20 +78,6 @@ public:
         return rows_count;
     }
 
-    int* Search(const int i, const int j) const
-    {
-        return &mat[i][j];
-    }
-
-    Matrix operator*=(const int a)
-    {
-        for (int i = 0; i < rows_count; i++)
-            for (int j = 0; j < columns_count; j++)
-                mat[i][j] *= a;
-
-        return *this;
-    }
-
     Matrix operator=(const Matrix &another_mat) const
     {
         if (rows_count != another_mat.rows_count || columns_count != another_mat.columns_count)
@@ -90,6 +92,15 @@ public:
 
             return *this;
         }
+    }
+
+    Matrix& operator*=(const int a)
+    {
+        for (int i = 0; i < rows_count; i++)
+            for (int j = 0; j < columns_count; j++)
+                mat[i][j] *= a;
+
+        return *this;
     }
 
     bool operator==(const Matrix &another_mat) const
@@ -120,6 +131,13 @@ public:
     bool operator!=(const Matrix &another_mat) const
     {
         return !(*this == another_mat);
+    }
+
+    ~Matrix()
+    {
+        for (int i = 0; i < rows_count; i++)
+            delete [] mat[i];
+        delete [] mat;
     }
 };
 #endif
