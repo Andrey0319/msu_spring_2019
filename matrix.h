@@ -8,33 +8,25 @@ using std::endl;
 class Matrix
 {
 private:
-    int rows_count;
-    int columns_count;
+    size_t rows_count;
+    size_t columns_count;
     int** mat;
 
 public:
-    Matrix(const int rows, const int columns)
+    Matrix(const size_t rows, const size_t columns) : rows_count(rows), columns_count(columns)
     {
-        if (rows < 0 || columns < 0)
-            throw std::out_of_range("");
-        else
-        {
-            rows_count = rows;
-            columns_count = columns;
-            mat = new int*[rows];
-
-            for (int i = 0; i < rows;  i += 1)
-                mat[i] =  new int[columns];
-        }
+        mat = new int*[rows];
+        for (size_t i = 0; i < rows;  i += 1)
+            mat[i] =  new int[columns];
     }
 
     class Row
     {
     public:
         int *mat;
-        unsigned columns_count;
+        size_t columns_count;
 
-        Row (int *row, const int c)
+        Row (int *row, const size_t c)
             :mat (row), columns_count (c) {}
 
         const int& operator [] (size_t j) const
@@ -68,12 +60,12 @@ public:
         return row;
     }
 
-    int getColumns() const
+    size_t getColumns() const
     {
         return columns_count;
     }
 
-    int getRows() const
+    size_t getRows() const
     {
         return rows_count;
     }
@@ -86,8 +78,8 @@ public:
         }
         else
         {
-            for (int i = 0; i < rows_count; i++)
-                for (int j = 0; j < columns_count; j++)
+            for (size_t i = 0; i < rows_count; i++)
+                for (size_t j = 0; j < columns_count; j++)
                     mat[i][j] = another_mat.mat[i][j];
 
             return *this;
@@ -96,8 +88,8 @@ public:
 
     Matrix& operator*=(const int a)
     {
-        for (int i = 0; i < rows_count; i++)
-            for (int j = 0; j < columns_count; j++)
+        for (size_t i = 0; i < rows_count; i++)
+            for (size_t j = 0; j < columns_count; j++)
                 mat[i][j] *= a;
 
         return *this;
@@ -113,9 +105,9 @@ public:
         {
             bool is_equal = true;
 
-            for (int i = 0; i < rows_count; i++)
+            for (size_t i = 0; i < rows_count; i++)
             {
-                for (int j = 0; j < columns_count; j++)
+                for (size_t j = 0; j < columns_count; j++)
                     if (mat[i][j] != another_mat.mat[i][j])
                     {
                         is_equal = false;
@@ -135,9 +127,10 @@ public:
 
     ~Matrix()
     {
-        for (int i = 0; i < rows_count; i++)
+        for (size_t i = 0; i < rows_count; i++)
             delete [] mat[i];
         delete [] mat;
     }
 };
 #endif
+
