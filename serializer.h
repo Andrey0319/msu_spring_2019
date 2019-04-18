@@ -75,7 +75,7 @@ private:
     {
         if (put_(val) != Error::NoError)
             return Error::CorruptedArchive;
-        return process(std::forward<Args>(args)...);
+        return process(std::forward<const Args>(args)...);
     }
 };
 
