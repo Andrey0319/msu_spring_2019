@@ -35,7 +35,6 @@
 #pragma warning(disable : 4996)
 
 #include <iostream>
-#include <stdlib.h>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
